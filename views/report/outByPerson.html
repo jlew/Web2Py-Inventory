@@ -1,0 +1,8 @@
+{{extend 'layout.html'}}
+<h1>{{=T("Inventory On Loan")}}</h1>
+
+{{for person, inventory in res:}}
+    <h3>{{=person}}</h3>
+        {{=inventory}}
+{{pass}}
+{{#=BEAUTIFY(response._vars)}}

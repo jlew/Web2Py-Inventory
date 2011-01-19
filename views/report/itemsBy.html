@@ -1,0 +1,13 @@
+{{extend 'layout.html'}}
+<h1>Inventory Report</h1>
+
+<table>
+{{=itemTableHeader()}}
+{{for cat in out:}}
+    <tr><td colspan=5><h2>{{=cat}}</h2></td></tr>
+    {{for item in out[cat]:}}
+        {{=itemToTableRow(item)}}
+    {{pass}}
+{{pass}}
+</table>
+{{#=BEAUTIFY(response._vars)}}
