@@ -7,12 +7,23 @@ def index():
                        onselect="document.location = 'http://%s%s/' + id;" % (request.env.http_host, URL("browse","item"))))
                        
 def item():
-    return dict(item=db(db.item.id==request.args(0)).select().first())
-
+    item = db(db.item.id==request.args(0)).select().first()
+    if item:
+        return dict(item=item)
+    else:
+        response.view = "error404.html"
+        return dict(error_title = T("Item Not Found"), error_body=T("The requested item was not found in our inventory."))
+        
 def people():
     return dict(
         grid=plugin_jqgrid(db.person, height=400, col_width=150,
                        columns=['id', 'First_Name', 'Last_Name', 'dce'],
                        onselect="document.location = 'http://%s%s/' + id;" % (request.env.http_host, URL("browse","person"))))
 def person():
-    return dict(person=db(db.person.id==request.args(0)).select().first())
+    person=db(db.person.id==request.args(0)).select().first()
+    
+    if person:
+        return dict(person=person)
+    else:
+        response.view = "error404.html"
+        return dict(error_title = T("Person Not Found"), error_body=T("The requested person was not found in our database."))
