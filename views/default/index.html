@@ -1,33 +1,26 @@
-{{left_sidebar_enabled=right_sidebar_enabled=False}}
 {{extend 'layout.html'}}
 
-{{if 'message' in globals():}}
+<h1>Welcome to the Inventory System</h1>
 
-<h1>{{=message}}</h1>
+<p>
+This system is a work in progress.  It should be fairly complete in
+the basic requirements.  At the moment Adding inventory, checking in
+and out, browsing, and basic reports are done.  Next requirement will
+be some permissions to allow anyone to search for items while limiting
+who can check in out and out items as well as adding items.
+</p>
 
-<hr />
-<h2>Readme</h2>
-<ul>
-  <li>{{=T('You are successfully running web2py')}}</li>
-  <li>{{=T('This is a copy of the scaffolding application')}}</li>
-  <li>{{=T('You can modify this application and adapt it to your needs')}}</li>
-  <li>{{=A(B(T("click here for the administrative interface")), _href=URL('admin','default','index'))}}</li>
-  <li>{{=A(T("click here for online examples"), _href=URL('examples','default','index'))}}</li>
-  <li><a href="http://web2py.com">web2py.com</a></li>
-  <li><a href="http://web2py.com/book">{{=T('documentation')}}</a></li>
-</ul>
+<p>
+To be decided, how to delete/remove items while keeping accountability.
+</p>
 
-<ol>
-  <li>{{=T('You visited the url')}} {{=A(request.env.path_info,_href=request.env.path_info)}}</li>
-  <li>{{=T('Which called the function')}} {{=A(request.function+'()',_href='#')}} {{=T('located in the file')}}
-    {{=A('web2py/applications/%(application)s/controllers/%(controller)s.py'%request,_href=URL('admin','default','peek',args=(request.application,'controllers',request.controller+'.py')))}}</li>
-  <li>{{=T('The output of the file is a dictionary that was rendered by the view')}}
-    {{=A('web2py/applications/%(application)s/views/%(controller)s/index.html'%request,_href=URL('admin','default','peek',args=(request.application,'views',request.controller,'index.html')))}}</li>
-</ol>
-
-{{else:}}
-{{=BEAUTIFY(response._vars)}}
+<h2>Recent Activity</h2>
+<table>
+{{for log_entry in activity:}}
+<tr>
+  <td>{{=log_entry.Date.strftime(DATE_FORMAT)}}</td>
+  <td>{{=log_entry.item.Name}}</td>
+  <td>{{=log_entry.msg}}</td>
+</tr>
 {{pass}}
-
-{{block left_sidebar}}New Left Sidebar Content{{end}}
-{{block right_sidebar}}New Right Sidebar Content{{end}}
+</table>

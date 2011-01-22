@@ -15,7 +15,7 @@
 </tr>
 <tr>
   <td><b>Date Added:</b></td>
-  <td>{{=item.CreationDate}}</td>
+  <td>{{=item.CreationDate.strftime(DATE_FORMAT)}}</td>
 </tr>
 <tr>
   <td><b>Value:</b></td>
@@ -38,7 +38,7 @@
   <td>
     <table>
       {{for log_entry in item.item_log.select():}}
-      <tr><td>{{=log_entry.Date}}:</td><td>{{=log_entry.msg}}</td></tr>
+      <tr><td>{{=log_entry.Date.strftime(DATE_FORMAT)}}:</td><td>{{=log_entry.msg}}</td></tr>
       {{pass}}
     </table>
   </td>

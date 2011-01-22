@@ -11,7 +11,7 @@ def itemTableHeader():
 
 def itemToTableRow(item):
     return TR(
-            TD(DIV(item.Name, " (", I(A(item.BarCode, _href=URL('default','item',args=item.BarCode))), ")")),
+            TD(DIV(item.Name, " (", I(A(item.BarCode, _href=URL('browse','item',args=item.id))), ")")),
             TD(item.Category),
             TD(item.Status),
             TD(item.Condition),

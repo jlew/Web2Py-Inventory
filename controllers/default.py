@@ -9,12 +9,7 @@
 #########################################################################
 
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
-    """
-    response.flash = T('You are successfully running web2py.')
-    return dict(message=T('Hello World'))
+    return dict(activity = db(db.item_log.id>0).select(orderby=db.item_log.Date, limitby=(0,20)))
 
 def user():
     """

@@ -18,11 +18,12 @@ def checkIn():
             if item.CheckedOut:
                 if request.vars.msg:
                     comments = "%s \n\n Checkin (%s) Comments: %s" % \
-                                (item.Comments, item.CheckedOut.search_name, request.vars.msg)
+                                (item.Comments, item.CheckedOut['search_name'], request.vars.msg)
                 else:
                     comments = item.Comments
+
+                db.item_log.insert(item=item.id, msg="Checked In from %s" % item.CheckedOut['search_name'])
                 item.update_record(CheckedOut=None, Comments=comments)
-                db.item_log.insert(item=item.id, msg="Checked in")
                 response.flash = T("Item Checked In")
             else:
                 response.flash = T("Error: Item not checked out")
@@ -48,11 +49,11 @@ def checkOut():
             if not item.CheckedOut:
                 if request.vars.msg:
                     comments = "%s \n\n Checkin (%s) Comments: %s" % \
-                                (item.Comments, item.CheckedOut.search_name, request.vars.msg)
+                                (item.Comments, person.search_name, request.vars.msg)
                 else:
                     comments = item.Comments
                 item.update_record(CheckedOut = person.id, Comments = comments)
-                db.item_log.insert(item=item.id, msg="Checked out by %s" % person.search_name)
+                db.item_log.insert(item=item.id, msg=T("Checked out to %s") % person.search_name)
                 response.flash = T("Item Checked Out")
             else:
                 response.flash = T("Error, Item currently checked out In")
