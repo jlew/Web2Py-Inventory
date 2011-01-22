@@ -1,6 +1,7 @@
 # coding: utf8
 # try something like
-def index(): return dict(message="hello from manage.py")
+def index():
+    redirect(URL('default','index'))
 
 @auth.requires_membership("add_inventory")
 def addItem():
@@ -19,12 +20,12 @@ def checkIn():
         if item:
             if item.CheckedOut:
                 if request.vars.msg:
-                    comments = "%s \n\n Checkin (%s) Comments: %s" % \
+                    comments = T("%s \n\n Checkin (%s) Comments: %s") % \
                                 (item.Comments, item.CheckedOut['search_name'], request.vars.msg)
                 else:
                     comments = item.Comments
 
-                db.item_log.insert(item=item.id, msg="Checked In from %s" % item.CheckedOut['search_name'])
+                db.item_log.insert(item=item.id, msg=T("Checked In from %s") % item.CheckedOut['search_name'])
                 item.update_record(CheckedOut=None, Comments=comments)
                 response.flash = T("Item Checked In")
             else:
@@ -51,7 +52,7 @@ def checkOut():
         if person and item:
             if not item.CheckedOut:
                 if request.vars.msg:
-                    comments = "%s \n\n Checkin (%s) Comments: %s" % \
+                    comments = T("%s \n\n Checkin (%s) Comments: %s") % \
                                 (item.Comments, person.search_name, request.vars.msg)
                 else:
                     comments = item.Comments

@@ -17,7 +17,7 @@ def item():
 def people():
     return dict(
         grid=plugin_jqgrid(db.person, height=400, col_width=150,
-                       columns=['id', 'First_Name', 'Last_Name', 'dce'],
+                       columns=['id', 'First_Name', 'Last_Name', 'Email'],
                        onselect="document.location = 'http://%s%s/' + id;" % (request.env.http_host, URL("browse","person"))))
 def person():
     person=db(db.person.id==request.args(0)).select().first()

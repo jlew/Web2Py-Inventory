@@ -54,4 +54,4 @@ if auth.has_membership("check_in") or auth.has_membership("check_out") or auth.h
     response.menu.append((T('Manage Inventory'), False, "#", mnu))
     
 if auth.has_membership("admin"):
-    response.menu.append((T('Manage Users'), False, URL(request.application,'plugin_useradmin','index'), []))
+    response.menu.append((T('Manage System Users'), False, URL(request.application,'plugin_useradmin','index'), []))

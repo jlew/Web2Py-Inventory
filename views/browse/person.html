@@ -3,23 +3,23 @@
 
 <table>
 <tr>
-  <td width=125><b>First Name:</b></td>
+  <td width=125><b>{{=db.person.First_Name.label}}:</b></td>
   <td>{{=person.First_Name}}</td>
 </tr>
 <tr>
-  <td><b>Last Name:</b></td>
+  <td><b>{{=db.person.Last_Name.label}}:</b></td>
   <td>{{=person.Last_Name}}</td>
 </tr>
 <tr>
-  <td><b>DCE</b></td>
-  <td>{{=person.dce}}</td>
+  <td><b>{{=db.person.Email.label}}:</b></td>
+  <td>{{=person.Email}}</td>
 </tr>
 <tr>
-  <td><b>Phone Number:</b></td>
-  <td>{{=person.phone}}</td>
+  <td><b>{{=db.person.Phone.label}}:</b></td>
+  <td>{{=person.Phone}}</td>
 </tr>
 <tr>
-  <td><b>Items:</b></td>
+  <td><b>{{=T("Items")}}:</b></td>
   <td>
     <ul>
     {{for item in person.item.select():}}

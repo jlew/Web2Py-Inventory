@@ -20,7 +20,8 @@ def plugin_jqgrid(table,fieldname=None,fieldvalue=None,col_widths={},
     from gluon.serializers import json
     _id = 'jqgrid_%s' % table
     columns = columns or [x for x in table.fields if table[x].readable]
-    colnames = [x.replace('_',' ').capitalize() for x in columns]
+    colnames = [str(table[x].label) for x in columns]
+    #colnames = [x.replace('_',' ').capitalize() for x in columns]
     colmodel = [{'name':x,'index':x, 'width':col_widths.get(x,col_width), 'sortable':True} \
                     for x in columns if table[x].readable]    
     callback = URL(r=request,c='plugin_jqgrid',f='data',

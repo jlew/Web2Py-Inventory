@@ -1,6 +1,7 @@
 # coding: utf8
 # try something like
-def index(): return dict(message="hello from report.py")
+def index():
+    redirect(URL('default','index'))
 
 def all():
     return dict(report=db(db.item.id>0).select())

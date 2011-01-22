@@ -82,26 +82,26 @@ crud.settings.auth = None                      # =auth to enforce authorization 
 #########################################################################
 
 db.define_table('person',
-    Field('First_Name', 'string', length=40, required=True, label="First Name"),
-    Field('Last_Name', 'string', length=40, required=True, label="Last Name"),
-    Field('dce', 'string', required=True, label="DCE or Email"),
-    Field('phone', 'string', length=20, label="Phone Number"),
-    Field('search_name',compute=lambda r: "%s, %s (%s)" %( r['Last_Name'], r['First_Name'], r['dce'])),
-    format="%(Last_Name)s, %(First_Name)s (%(dce)s)"
+    Field('First_Name', 'string', length=40, required=True, label=T("First Name")),
+    Field('Last_Name', 'string', length=40, required=True, label=T("Last Name")),
+    Field('Email', 'string', required=True, label=T("Email")),
+    Field('Phone', 'string', length=20, label=T("Phone Number")),
+    Field('search_name',compute=lambda r: "%s, %s (%s)" %( r['Last_Name'], r['First_Name'], r['Email'])),
+    format="%(Last_Name)s, %(First_Name)s (%(Email)s)"
 )
 
 db.define_table('item',
-    Field('Name'),
-    Field('Description', 'text'),
-    Field('Category'),
-    Field('BarCode', unique=True),
-    Field('HomeLocation'),
-    Field('Value'),
-    Field('Condition', label="Item Condition", default="New"),
-    Field('Status', default="Avaliable"),
-    Field('CreationDate', 'datetime', default=request.now, writable=False),
-    Field('ModificationDate', 'datetime', default=request.now, update=request.now, writable=False),
-    Field('CheckedOut', "reference person", requires=IS_EMPTY_OR(IS_IN_DB(db, db.person.id, db.person._format), null=None), readable=False, writable=False),
+    Field('Name', 'string', length=100, label=T("Name")),
+    Field('Description', 'text', label=T("Description")),
+    Field('Category', 'string', length=100, label=T("Category")),
+    Field('BarCode', unique=True, label=T("Bar Code")),
+    Field('HomeLocation', 'string', label=T("Location")),
+    Field('Value', label=T("Value")),
+    Field('Condition', 'string', label=T("Condition"), default=T("New")),
+    Field('Status', 'string', label=T("Status"), default=T("Avaliable")),
+    Field('CreationDate', 'datetime', label=T("Creation Date"), default=request.now, writable=False),
+    Field('ModificationDate', 'datetime', label=T("Last Modified"), default=request.now, update=request.now, writable=False),
+    Field('CheckedOut', "reference person", label=T("Loaned To"), requires=IS_EMPTY_OR(IS_IN_DB(db, db.person.id, db.person._format), null=None), readable=False, writable=False),
     Field('Comments', 'text'),
     format="%(Name)s: %(BarCode)s"
 )
