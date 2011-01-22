@@ -1,0 +1,67 @@
+{{extend 'layout.html'}}
+{{=script}}
+<h1>User Admin</h1>
+<h2>Users</h2>
+<table id='useradmin-table' style = "width: 100%" class="datatables_table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>eMail</th>
+            <th>Groups</th>
+            <th>Status</th>
+            <th>Block</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{for user in users:
+        status = (IMG(_src=URL(request.application,'static/plugin_useradmin','flag_green.png'), _alt="OK"))
+        if user.registration_key:
+            status = TAG['']('Pending Approval: ' if user.registration_key=='pending' else 'blocked' if user.registration_key == 'blocked' else 'waiting for email confirm',DIV(A(IMG(_src=URL(request.application,'static/plugin_useradmin','accept.png'), _alt="Approve User", _title="Approve User"), _href=URL(r=request,f='index',vars=dict(approve=user.id)))))
+        pass
+        groups = [x.group_id for x in user.auth_membership.select()]
+    }}
+    {{=TR(
+        TD(DIV("%s %s" % (user.first_name, user.last_name), _onclick = "web2py_component('%s','edit_user_%s');"%(URL(request.application, 'plugin_useradmin', 'edit_user', args = [user.id]), user.id), _class = 'click'), DIV(_id = "edit_user_%s"%user.id)),
+        TD(A(user.email,_href="mailto:%s"%user.email)),
+        TD(TABLE([TR(TD(g.role),TD(IMG(_src=URL(request.application,'static/plugin_useradmin','cancel.png'), _alt="Remove User From Group", _onclick="ajax('%s',[],'plugin_useradmin')"%URL(r=request,f='index',vars=dict(del_usergroup="%s_%s"%(user.id,g.id) ))) )) for g in groups]),
+        forms_users_groups[user.id] ),
+        TD(status),
+        TD(
+            A(
+                IMG(
+                    _src=URL(request.application,'static/plugin_useradmin','stop.png'),
+                    _alt="Bock User", 
+                    _class="click"
+                ),
+                _href=URL(r=request,f='index',vars=dict(block_user=user.id))
+            )
+          ),
+        TD(
+            A(
+                IMG(
+                    _src=URL(request.application,'static/plugin_useradmin','cancel.png'),
+                    _alt="Delete User",  _class="click"),
+                    _href=URL(r=request,f='index',vars=dict(del_user=user.id))
+             )
+           )
+        )}}
+    {{pass}}
+    </tbody>
+</table>
+<table>
+    <tr>
+        <td>
+            <h2>Create New User</h2>
+            {{=LOAD('plugin_useradmin', 'edit_user', ajax=True)}}
+        </td>
+        <td>
+            <h2>Groups</h2>
+            {{=TABLE([TR(TD('create', _class='click',_onclick = "web2py_component('%s','plugin_useradmin_edit_role');"%URL( request.application, 'plugin_useradmin', 'edit_role') ),TD())]+[TR(TD(g.role, _onclick = "web2py_component('%s','plugin_useradmin_edit_role');"%URL( request.application, 'plugin_useradmin', 'edit_role', args = [g.id]), _class='click'),TD(IMG(_src=URL(request.application,'static/plugin_useradmin','cancel.png'), _alt="Delete Group", _onclick="ajax('%s',[],'plugin_useradmin')"%URL(r=request,f='index',vars=dict(del_group=g.id))))) for g in db_groups])}}
+        </td>
+        <td>
+            <h2>Create New Group / Edit Group</h2>
+            {{=LOAD('plugin_useradmin', 'edit_role', ajax=True, target='plugin_useradmin_edit_role')}}
+        </td>
+    </tr>
+</table>

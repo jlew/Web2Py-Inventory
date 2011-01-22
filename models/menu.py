@@ -43,4 +43,5 @@ response.menu = [
             (T('Status'), False, URL(request.application,'report','itemsBy', args="Status"), []),
         ]),
     ]),
+    (T('Manage Users'), False, URL(request.application,'plugin_useradmin','index'), []),
     ]

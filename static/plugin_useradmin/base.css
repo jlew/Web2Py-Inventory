@@ -1,0 +1,7 @@
+#useradmin-table > tr > td {
+    vertical-align: top;
+    border-bottom: solid 1px #aaa;
+}
+.click {
+    cursor: pointer;
+}

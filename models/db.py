@@ -40,6 +40,7 @@ mail.settings.sender = 'you@gmail.com'         # your email
 mail.settings.login = 'username:password'      # your credentials or None
 
 auth.settings.hmac_key = 'sha512:0a715450-99df-4dc2-a70e-0bd3f458dd1d'   # before define_tables()
+auth.settings.create_user_groups = False
 auth.define_tables()                           # creates all needed tables
 auth.settings.mailer = mail                    # for user email verification
 auth.settings.registration_requires_verification = False
@@ -126,3 +127,9 @@ db.item.CheckedOut.widget = SQLFORM.widgets.autocomplete(request, db.person.sear
 #populate(db.person,50)
 #populate(db.item,200)
 #populate(db.item_log,500)
+
+if db(db.auth_group.role=="admin").count() == 0:
+    auth.add_group(role = 'admin')
+    auth.add_group(role = 'add_inventory')
+    auth.add_group(role = 'check_in')
+    auth.add_group(role = 'check_out')

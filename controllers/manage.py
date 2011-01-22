@@ -2,6 +2,7 @@
 # try something like
 def index(): return dict(message="hello from manage.py")
 
+@auth.requires_membership("add_inventory")
 def addItem():
     form = SQLFORM(db.item)
     
@@ -10,7 +11,8 @@ def addItem():
     elif form.errors:
        response.flash = T("Form Has Errors, Item Not Added")
     return dict(form=form)
-    
+   
+@auth.requires_membership("check_in") 
 def checkIn():
     if request.vars.barcode:
         item = db(db.item.BarCode == request.vars.barcode).select().first()
@@ -32,7 +34,8 @@ def checkIn():
             response.flash = T("Item Not Found")
     return dict()
 
-    
+
+@auth.requires_membership("check_out") 
 def checkOut():
     add_user = SQLFORM(db.person)
     
