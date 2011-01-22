@@ -1,5 +1,6 @@
 cache
 databases
 sessions
+errors
 *.bak
 *.pyc
