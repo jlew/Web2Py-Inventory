@@ -26,11 +26,6 @@ response.menu = [
         (T('Inventory'), False, URL(request.application, 'browse', 'index'), []),
         (T('People'), False, URL(request.application, 'browse', 'people'), []),
     ] ),
-    (T('Manage Inventory'), False, URL(request.application,'manage','index'), [
-        (T('Add Inventory'), False, URL(request.application,'manage','addItem'), []),
-        (T('Check In'), False, URL(request.application,'manage','checkIn'), []),
-        (T('Check Out'), False, URL(request.application,'manage','checkOut'), []),
-    ]),
     (T('Reports'), False, '#', [
         (T('All Inventory'), False, URL(request.application,'report','all'), []),
         (T('Checked Out Items'), False, URL(request.application,'report','checkedOut'), []),
@@ -43,5 +38,20 @@ response.menu = [
             (T('Status'), False, URL(request.application,'report','itemsBy', args="Status"), []),
         ]),
     ]),
-    (T('Manage Users'), False, URL(request.application,'plugin_useradmin','index'), []),
     ]
+if auth.has_membership("check_in") or auth.has_membership("check_out") or auth.has_membership("add_inventory"):
+    mnu = []
+    
+    if auth.has_membership("add_inventory"):
+        mnu.append((T('Add Inventory'), False, URL(request.application,'manage','addItem'), []))
+    
+    if auth.has_membership("check_in"):
+        mnu.append((T('Check In'), False, URL(request.application,'manage','checkIn'), []))
+        
+    if auth.has_membership("check_out"):
+        mnu.append((T('Check Out'), False, URL(request.application,'manage','checkOut'), []))
+        
+    response.menu.append((T('Manage Inventory'), False, "#", mnu))
+    
+if auth.has_membership("admin"):
+    response.menu.append((T('Manage Users'), False, URL(request.application,'plugin_useradmin','index'), []))
