@@ -74,18 +74,19 @@ crud.settings.auth = None                      # =auth to enforce authorization 
 ## >>> rows=db(db.mytable.myfield=='value').select(db.mytable.ALL)
 ## >>> for row in rows: print row.id, row.myfield
 #########################################################################
+
 db.define_table('person',
-    Field('First_Name'),
-    Field('Last_Name'),
-    Field('search_name',compute=lambda r: "%s, %s" %( r['Last_Name'], r['First_Name'])),
-    Field('dce'),
-    Field('phone'),
+    Field('First_Name', 'string', length=40, required=True, label="First Name"),
+    Field('Last_Name', 'string', length=40, required=True, label="Last Name"),
+    Field('dce', 'string', required=True, label="DCE or Email"),
+    Field('phone', 'string', length=20, label="Phone Number"),
+    Field('search_name',compute=lambda r: "%s, %s (%s)" %( r['Last_Name'], r['First_Name'], r['dce'])),
     format="%(Last_Name)s, %(First_Name)s (%(dce)s)"
 )
 
 db.define_table('item',
     Field('Name'),
-    Field('Description'),
+    Field('Description', 'text'),
     Field('Category'),
     Field('BarCode', unique=True),
     Field('HomeLocation'),
@@ -94,18 +95,32 @@ db.define_table('item',
     Field('Status', default="Avaliable"),
     Field('CreationDate', 'datetime', default=request.now, writable=False),
     Field('ModificationDate', 'datetime', default=request.now, update=request.now, writable=False),
-    Field('CheckedOut', "reference person", requires=IS_EMPTY_OR(IS_IN_DB(db, db.person.id, db.person._format), null=None)),
+    Field('CheckedOut', "reference person", requires=IS_EMPTY_OR(IS_IN_DB(db, db.person.id, db.person._format), null=None), readable=False, writable=False),
     Field('Comments', 'text'),
     format="%(Name)s: %(BarCode)s"
 )
 
+db.define_table('item_log',
+    Field('Date', 'datetime', default=request.now, writable=False),
+    Field('item', db.item),
+    Field('msg')
+)
+
+db.item.Name.widget = SQLFORM.widgets.autocomplete(request,
+                            db.item.Name, limitby=(0,40), min_length=0, orderby=db.item.Name)
 db.item.Category.widget = SQLFORM.widgets.autocomplete(request,
-                            db.item.Category, limitby=(0,40), min_length=0)
+                            db.item.Category, limitby=(0,40), min_length=0, orderby=db.item.Category)
 db.item.HomeLocation.widget = SQLFORM.widgets.autocomplete(request,
-                            db.item.HomeLocation, limitby=(0,40), min_length=0)
+                            db.item.HomeLocation, limitby=(0,40), min_length=0, orderby=db.item.HomeLocation)
 db.item.Condition.widget = SQLFORM.widgets.autocomplete(request,
-                            db.item.Condition, limitby=(0,40), min_length=0)
+                            db.item.Condition, limitby=(0,40), min_length=0, orderby=db.item.Condition)
 db.item.Status.widget = SQLFORM.widgets.autocomplete(request,
-                            db.item.Status, limitby=(0,40), min_length=0)
+                            db.item.Status, limitby=(0,40), min_length=0, orderby=db.item.Status)
                             
-db.item.CheckedOut.widget = SQLFORM.widgets.autocomplete(request, db.person.search_name, id_field=db.person.id, limitby=(0,10), min_length=1)
+db.item.CheckedOut.widget = SQLFORM.widgets.autocomplete(request, db.person.search_name,
+                            id_field=db.person.id, limitby=(0,10), min_length=0, orderby=db.person.search_name)
+
+#from gluon.contrib.populate import populate
+#populate(db.person,50)
+#populate(db.item,200)
+#populate(db.item_log,500)

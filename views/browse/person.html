@@ -1,0 +1,31 @@
+{{extend 'layout.html'}}
+<h1>{{=person.search_name}}</h1>
+
+<table>
+<tr>
+  <td width=125><b>First Name:</b></td>
+  <td>{{=person.First_Name}}</td>
+</tr>
+<tr>
+  <td><b>Last Name:</b></td>
+  <td>{{=person.Last_Name}}</td>
+</tr>
+<tr>
+  <td><b>DCE</b></td>
+  <td>{{=person.dce}}</td>
+</tr>
+<tr>
+  <td><b>Phone Number:</b></td>
+  <td>{{=person.phone}}</td>
+</tr>
+<tr>
+  <td><b>Items:</b></td>
+  <td>
+    <ul>
+    {{for item in person.item.select():}}
+      <li>{{=A(item.Name, _href=URL("browse","item",args=item.id))}}</li>
+    {{pass}}
+    </ul>
+  </td>
+</tr>
+</table>

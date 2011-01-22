@@ -1,0 +1,79 @@
+{{extend 'layout.html'}}
+
+<style type="text/css">
+    <!--
+    #ajaxresults{
+        background: #ffffff;
+        padding: 5px 10px;
+        max-height: 400px;
+        overflow: auto;
+        width: 300px;
+        position: absolute;
+        z-index: 99;
+        border: 1px solid #A9A9A9;
+        border-width: 0 1px 1px 1px;
+        -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+        -box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    }
+    #ajaxresults a{
+        color:#666666;
+    }
+    -->
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        hide();
+    });
+
+    function getData(value){
+        if(value != ""){
+            $("#ajaxresults").show();
+            $.post("{{=URL(r=request,f='ajaxlivesearch')}}",{partialstr:value},function(result){
+                $("#ajaxresults").html(result);
+            });
+        }else{
+            hide();
+        }
+    }
+
+    function hide(){
+        $("#ajaxresults").hide();
+    }
+
+    function copyToBox(value){
+        $("#person").val(value);
+        hide();
+    }   
+    </script>
+<h1>Check Out Item</h1>
+<table>
+<tr><td>
+<b>Checkout to existing Person</b>
+<form action="{{=URL()}}" method="post">
+<table>
+  <tr>
+    <td><b>Person:</b></td>
+    <td>
+    <input type="text" name="person" id="person" autocomplete="off" onkeyup="getData(this.value);" /><br />
+    <div id="ajaxresults"></div>
+    </td>
+  </tr>
+  <tr>
+    <td>Optional Comments</td>
+    <td><textarea name="msg" cols=80 rows=5></textarea></td>
+  </tr>
+  <tr>
+  <tr>
+    <td><b>Item Barcode:</b></td>
+    <td><input type="text" name="barcode" />
+  </tr>
+  <tr><td></td><td><input type="submit" value="Check Out"/></td></tr>
+</table>
+</form>
+</td><td>
+<b>Add New Person to System</b>
+{{=add_user}}
+</td></tr>
+</table>

@@ -1,0 +1,53 @@
+{{extend 'layout.html'}}
+<h1>{{=item.Name}} ({{=item.Status}})</h1>
+<table>
+<tr>
+  <td width="125"><b>BarCode:</b></td>
+  <td>{{=item.BarCode}}</td>
+</tr>
+<tr>
+  <td><b>Category:</b></td>
+  <td>{{=item.Category}}</td>
+</tr>
+<tr>
+  <td><b>Location:</b></td>
+  <td>{{=item.HomeLocation}}</td>
+</tr>
+<tr>
+  <td><b>Date Added:</b></td>
+  <td>{{=item.CreationDate}}</td>
+</tr>
+<tr>
+  <td><b>Value:</b></td>
+  <td>{{=item.Value}}</td>
+</tr>
+<tr>
+  <td><b>Condition:</b></td>
+  <td>{{=item.Condition}}</td>
+</tr>
+<tr>
+  <td><b>Description:</b></td>
+  <td>{{=item.Description}}</td>
+</tr>
+<tr>
+  <td><b>Comments:</b></td>
+  <td>{{=item.Comments}}
+</tr>
+<tr>
+  <td><b>Log:</b></td>
+  <td>
+    <table>
+      {{for log_entry in item.item_log.select():}}
+      <tr><td>{{=log_entry.Date}}:</td><td>{{=log_entry.msg}}</td></tr>
+      {{pass}}
+    </table>
+  </td>
+</tr>
+{{if item.CheckedOut:}}
+<tr>
+  <td><b>Checked Out To:</b></td>
+  <td>{{=A(db.person._format % item.CheckedOut, _href=URL('browse','person', args=item.CheckedOut))}}
+  </td>
+</tr>
+{{pass}}
+</table>

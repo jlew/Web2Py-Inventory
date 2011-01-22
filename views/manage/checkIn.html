@@ -1,0 +1,17 @@
+{{extend 'layout.html'}}
+<h1>This is the manage/checkIn.html template</h1>
+
+<form action="{{=URL()}}" method="post">
+<table>
+<tr>
+  <td>Optional Comments</td>
+  <td><textarea name="msg" cols=80 rows=5></textarea></td>
+</tr>
+<tr>
+  <td>Bar Code:</td>
+  <td><input type="text" name="barcode"></td>
+</tr>
+<tr><td></td><td><input type="submit" value="Check In"></td></tr>
+</table>
+</form>
+{{=BEAUTIFY(response._vars)}}
