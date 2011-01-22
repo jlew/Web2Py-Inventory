@@ -1,0 +1,8 @@
+{{extend 'layout.html'}}
+<h1>Checked In Inventory</h1>
+<table>
+{{=itemTableHeader()}}
+{{for item in report:}}
+{{=itemToTableRow(item)}}
+{{pass}}
+</table>
