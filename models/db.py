@@ -40,7 +40,10 @@ mail.settings.sender = 'you@gmail.com'         # your email
 mail.settings.login = 'username:password'      # your credentials or None
 
 auth.settings.hmac_key = 'sha512:0a715450-99df-4dc2-a70e-0bd3f458dd1d'   # before define_tables()
+
 auth.settings.create_user_groups = False
+auth.settings.actions_disabled.append('register') 
+
 auth.define_tables()                           # creates all needed tables
 auth.settings.mailer = mail                    # for user email verification
 auth.settings.registration_requires_verification = False
