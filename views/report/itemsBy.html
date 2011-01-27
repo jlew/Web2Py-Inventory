@@ -1,5 +1,5 @@
 {{extend 'layout.html'}}
-<h1>Inventory Report</h1>
+<h1>{{=T("Inventory Report")}}</h1>
 
 <table>
 {{=itemTableHeader()}}
@@ -10,4 +10,3 @@
     {{pass}}
 {{pass}}
 </table>
-{{#=BEAUTIFY(response._vars)}}

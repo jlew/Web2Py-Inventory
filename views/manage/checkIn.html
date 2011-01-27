@@ -1,5 +1,5 @@
 {{extend 'layout.html'}}
-<h1>Checkin Item</h1>
+<h1>{{=T("Checkin Item")}}</h1>
 
 <form action="{{=URL()}}" method="post">
 <table>
@@ -8,10 +8,9 @@
   <td><textarea name="msg" cols=80 rows=5></textarea></td>
 </tr>
 <tr>
-  <td>Bar Code:</td>
+  <td>{{=db.item.BarCode.label}}:</td>
   <td><input type="text" name="barcode"></td>
 </tr>
-<tr><td></td><td><input type="submit" value="Check In"></td></tr>
+<tr><td></td><td><input type="submit" value="{{=T("Check In")}}"></td></tr>
 </table>
 </form>
-{{=BEAUTIFY(response._vars)}}

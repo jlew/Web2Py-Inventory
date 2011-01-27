@@ -47,33 +47,33 @@
         hide();
     }   
     </script>
-<h1>Check Out Item</h1>
+<h1>{{=T("Check Out Item")}}</h1>
 <table>
 <tr><td>
-<b>Checkout to existing Person</b>
+<b>{{=T("Checkout to existing Person")}}</b>
 <form action="{{=URL()}}" method="post">
 <table>
   <tr>
-    <td><b>Person:</b></td>
+    <td><b>{{=("Person")}}:</b></td>
     <td>
     <input type="text" name="person" id="person" autocomplete="off" onkeyup="getData(this.value);" /><br />
     <div id="ajaxresults"></div>
     </td>
   </tr>
   <tr>
-    <td>Optional Comments</td>
+    <td>{{=db.item.Comments.label}}:</td>
     <td><textarea name="msg" cols=80 rows=5></textarea></td>
   </tr>
   <tr>
   <tr>
-    <td><b>Item Barcode:</b></td>
+    <td><b>{{=db.item.BarCode.label}}:</b></td>
     <td><input type="text" name="barcode" />
   </tr>
-  <tr><td></td><td><input type="submit" value="Check Out"/></td></tr>
+  <tr><td></td><td><input type="submit" value="{{=T("Check Out")}}"/></td></tr>
 </table>
 </form>
 </td><td>
-<b>Add New Person to System</b>
+<b>{{=T("Add New Person to System")}}</b>
 {{=add_user}}
 </td></tr>
 </table>
