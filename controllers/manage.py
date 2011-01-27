@@ -12,6 +12,24 @@ def addItem():
     elif form.errors:
        response.flash = T("Form Has Errors, Item Not Added")
     return dict(form=form)
+
+@auth.requires_membership("edit_inventory")
+def editItem():
+    item = db(db.item.id==request.args(0)).select().first()
+    
+    if not item:
+        session.flash = T("Item not found")
+        redirect( URL('default','index') )
+    
+    form = SQLFORM(db.item, item)#, deletable = auth.has_membership("delete_inventory"))
+    
+    if form.accepts(request.vars, session):
+        response.flash = T("Item Edited")
+        db.item_log.insert(item=item.id, msg=T("Item Edited"))
+    elif form.errors:
+        response.flash = T("Form Has Errors, Item Not Edited")
+    return dict(form=form)
+
    
 @auth.requires_membership("check_in") 
 def checkIn():

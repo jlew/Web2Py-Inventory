@@ -122,3 +122,4 @@ if db(db.auth_group.role=="admin").count() == 0:
     auth.add_group(role = 'add_inventory')
     auth.add_group(role = 'check_in')
     auth.add_group(role = 'check_out')
+    auth.add_group(role = 'edit_inventory')

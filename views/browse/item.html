@@ -1,5 +1,8 @@
 {{extend 'layout.html'}}
-<h1>{{=item.Name}} ({{=item.Status}})</h1>
+{{if auth.has_membership("edit_inventory"):}}
+{{=A(T("Edit Item"), _href=URL('manage','editItem',args=item.id), _style="float: right;")}}
+{{pass}}
+<h1>{{=item.Name}}</h1>
 <table>
 <tr>
   <td width="125"><b>{{=db.item.BarCode.label}}:</b></td>
@@ -12,6 +15,10 @@
 <tr>
   <td><b>{{=db.item.HomeLocation.label}}:</b></td>
   <td>{{=item.HomeLocation}}</td>
+</tr>
+<tr>
+    <td><b>{{=db.item.Status.label}}:</b></td>
+    <td>{{=item.Status}}</td>
 </tr>
 <tr>
   <td><b>{{=db.item.CreationDate.label}}:</b></td>
