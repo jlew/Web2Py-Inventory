@@ -1,7 +1,12 @@
 {{extend 'layout.html'}}
 <h1>{{=T("Inventory On Loan")}}</h1>
 
+<table>
+{{=itemTableHeader()}}
 {{for person, inventory in res:}}
-    <h3>{{=person}}</h3>
-        {{=inventory}}
+    <tr><td colspan=10><b>{{=person}}</b></td></tr>
+        {{for item in inventory:}}
+        {{=itemToTableRow(item)}}
+        {{pass}}
 {{pass}}
+</table>
