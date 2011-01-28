@@ -9,7 +9,7 @@
 #########################################################################
 
 def index():
-    return dict(activity = db(db.item_log.id>0).select(orderby=db.item_log.Date, limitby=(0,20)))
+    return dict(activity = db(db.item_log.id>0).select(orderby=~db.item_log.Date, limitby=(0,10)))
 
 def user():
     """
