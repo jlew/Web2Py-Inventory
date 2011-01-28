@@ -9,6 +9,9 @@ def addItem():
     
     if form.accepts(request.vars, session):
         response.flash = T("Item Added to Inventory")
+        item = db(db.item.BarCode == request.vars.BarCode).select().first()
+        db.item_log.insert(item=item.id, msg=T("Item Added"))
+        
     elif form.errors:
        response.flash = T("Form Has Errors, Item Not Added")
     return dict(form=form)
