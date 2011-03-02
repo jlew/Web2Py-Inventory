@@ -13,7 +13,7 @@ def itemToTableRow(item):
     return TR(
             TD(DIV(item.Name, " (", I(A(item.BarCode, _href=URL('browse','item',args=item.id))), ")")),
             TD(item.Category),
-            TD(item.Status),
+            TD(T('On Loan') if item.CheckedOut else item.Status),
             TD(item.Condition),
             TD(item.HomeLocation),
             TD(item.Description or ""),
