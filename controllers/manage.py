@@ -41,7 +41,7 @@ def checkIn():
         if item:
             if item.CheckedOut:
                 if request.vars.msg:
-                    comments = T("%s \n\n Checkin (%s) Comments: %s") % \
+                    comments = T("%s\n\n Checkin (%s) Comments: %s") % \
                                 (item.Comments, item.CheckedOut['search_name'], request.vars.msg)
                 else:
                     comments = item.Comments
@@ -73,7 +73,7 @@ def checkOut():
         if person and item:
             if not item.CheckedOut:
                 if request.vars.msg:
-                    comments = T("%s \n\n Checkin (%s) Comments: %s") % \
+                    comments = T("%s\n\n Checkout (%s) Comments: %s") % \
                                 (item.Comments, person.search_name, request.vars.msg)
                 else:
                     comments = item.Comments
