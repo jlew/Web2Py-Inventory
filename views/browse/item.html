@@ -9,6 +9,10 @@
   <td>{{=item.BarCode}}</td>
 </tr>
 <tr>
+  <td><b>{{=db.item.SerialNumber.label}}:</b></td>
+  <td>{{=item.SerialNumber}}</td>
+</tr>
+<tr>
   <td><b>{{=db.item.Category.label}}:</b></td>
   <td>{{=item.Category}}</td>
 </tr>
@@ -38,22 +42,26 @@
 </tr>
 <tr>
   <td><b>{{=db.item.Comments.label}}:</b></td>
-  <td>{{=item.Comments}}
+  <td>{{if auth.user:}}{{=item.Comments}}{{else:}}{{=T("Login to view comments")}}{{pass}}</td>
 </tr>
 <tr>
   <td><b>{{=T("Log")}}:</b></td>
   <td>
+  {{if auth.user:}}
     <table>
       {{for log_entry in item.item_log.select():}}
       <tr><td>{{=log_entry.Date.strftime(DATE_FORMAT)}}:</td><td>{{=log_entry.msg}}</td></tr>
       {{pass}}
     </table>
+  {{else:}}
+  {{=T("Login to View Log")}}
+  {{pass}}
   </td>
 </tr>
 {{if item.CheckedOut:}}
 <tr>
   <td><b>{{=db.item.CheckedOut.label}}:</b></td>
-  <td>{{=A(db.person._format % item.CheckedOut, _href=URL('browse','person', args=item.CheckedOut))}}
+  <td>{{=A(db.person._format % item.CheckedOut if auth.user else T("Login to view person"), _href=URL('browse','person', args=item.CheckedOut))}}
   </td>
 </tr>
 {{pass}}

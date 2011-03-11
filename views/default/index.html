@@ -16,6 +16,7 @@ Reports are still under construction.
 To be decided, how to delete/remove items while keeping accountability.
 </p>
 
+{{if auth.user:}}
 <h2>Recent Activity</h2>
 <table>
 {{for log_entry in activity:}}
@@ -26,3 +27,4 @@ To be decided, how to delete/remove items while keeping accountability.
 </tr>
 {{pass}}
 </table>
+{{pass}}

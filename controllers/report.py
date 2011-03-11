@@ -11,7 +11,8 @@ def checkedOut():
 
 def checkedIn():
     return dict(report=db(db.item.CheckedOut == None).select())
-    
+
+@auth.requires_login()
 def outByPerson():
     out = []
     for person in db(db.person.id > 0).select(orderby=db.person.Last_Name):
