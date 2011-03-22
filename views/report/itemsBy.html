@@ -1,10 +1,18 @@
 {{extend 'layout.html'}}
 <h1>{{=T("Inventory Report")}}</h1>
 
-<table>
+{{if request.vars.filter:}}{{=A(T("Show All"),_href=URL(args=request.args))}}{{pass}}
+<table border="2">
 {{=itemTableHeader()}}
 {{for cat in out:}}
-    <tr><td colspan=5><h2>{{=cat}}</h2></td></tr>
+    <tr>
+        <td colspan=5>
+            <h2 style="display: inline; margin-bottom: 0px; font-size: 110%">{{=cat}}</h2>
+            {{if not request.vars.filter:}}
+            {{=A(IMG(_src=URL("static","images/filter.png"), _alt=T("Filter"), _style="width: 16px; height: 16px;"),_href=URL(args=request.args, vars={"filter":cat}))}}
+            {{pass}}
+        </td>
+    </tr>
     {{for item in out[cat]:}}
         {{=itemToTableRow(item)}}
     {{pass}}
