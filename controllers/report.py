@@ -24,6 +24,9 @@ def outByPerson():
     return dict(res= out)
 
 def itemsBy():
+    if not request.args(0):
+        raise HTTP(404, T("Error: Category type not found"))
+        
     out = {}
     for item in db(db.item.id > 0).select():
         the_key = item[request.args(0)]
