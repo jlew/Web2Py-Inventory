@@ -3,7 +3,7 @@
 def index():
     return dict(
         grid=plugin_jqgrid(db.item, height=400, 
-                       columns=['id', 'BarCode', 'SerialNumber', 'Name', 'Category', 'HomeLocation', 'Status'],
+                       columns=['id', 'BarCode', 'SerialNumber', 'Name', 'Category', 'HomeLocation', 'Status', 'Due'],
                        onselect="document.location = 'http://%s%s/' + id;" % (request.env.http_host, URL("browse","item"))))
                        
 def item():

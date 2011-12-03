@@ -47,7 +47,7 @@ def checkIn():
                     comments = item.Comments
 
                 db.item_log.insert(item=item.id, msg=T("Checked In from %s") % item.CheckedOut['search_name'])
-                item.update_record(CheckedOut=None, Comments=comments)
+                item.update_record(CheckedOut=None, Comments=comments, Due=None)
                 response.flash = T("Item Checked In")
             else:
                 response.flash = T("Error: Item not checked out")
@@ -65,7 +65,12 @@ def checkOut():
         response.flash = T("Person added to System")
     elif add_user.errors:
        response.flash = T("Form has errors")
-       
+    
+    dt, validate = db.item.Due.requires(request.vars.Due)
+    if validate:
+        response.flash = validate
+        return dict(add_user=add_user)
+        
     if request.vars.person and request.vars.barcode:
         person = db(db.person.search_name == request.vars.person).select().first()
         item = db(db.item.BarCode == request.vars.barcode).select().first()
@@ -77,7 +82,7 @@ def checkOut():
                                 (item.Comments, person.search_name, request.vars.msg)
                 else:
                     comments = item.Comments
-                item.update_record(CheckedOut = person.id, Comments = comments)
+                item.update_record(CheckedOut = person.id, Comments = comments, Due=dt)
                 db.item_log.insert(item=item.id, msg=T("Checked out to %s") % person.search_name)
                 response.flash = T("Item Checked Out")
             else:

@@ -87,6 +87,7 @@ db.define_table('item',
     Field('ModificationDate', 'datetime', label=T("Last Modified"), default=request.now, update=request.now, writable=False),
     Field('CheckedOut', "reference person", label=T("Loaned To"), requires=IS_EMPTY_OR(IS_IN_DB(db, db.person.id, db.person._format), null=None), readable=False, writable=False),
     Field('Comments', 'text'),
+    Field('Due', 'date', label=T("Return By"), comment=T("Optional due date"), requires=IS_EMPTY_OR(IS_DATE())),
     format="%(Name)s: %(BarCode)s"
 )
 

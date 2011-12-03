@@ -65,6 +65,10 @@
     <td><textarea name="msg" cols=80 rows=5></textarea></td>
   </tr>
   <tr>
+  <td>{{=db.item.Due.label}}:</td>
+  <td>{{=SQLFORM.widgets.date.widget(db.item.Due,None)}}<br>
+  {{=db.item.Due.comment}}</td>
+  </tr>
   <tr>
     <td><b>{{=db.item.BarCode.label}}:</b></td>
     <td><input type="text" name="barcode" />
