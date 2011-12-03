@@ -67,7 +67,7 @@
 <tr>
   <td><b>{{=db.item.Due.label}}:</b></td>
   <td>{{if item.Due:}}{{=item.Due}} {{if item.Due < request.now.date():}}{{=B(T("Overdue"), _style="color: red; font-weight: bold")}}{{pass}}
-  {{else:}} T("No Due Date Specified")}}{{pass}}</td>
+  {{else:}}{{=T("No Due Date Specified")}}{{pass}}</td>
 </tr>
 {{pass}}
 </table>
