@@ -23,7 +23,7 @@ def itemToTableRow(item):
             TD(DIV(item.Name, " (", I(A(item.BarCode, _href=URL('browse','item',args=item.id))), ")")),
             TD(item.Category),
             TD(status),
-            TD(item.Condition),
+            TD(item.CurrentCondition),
             TD(item.HomeLocation),
             TD(item.Description or ""),
             )

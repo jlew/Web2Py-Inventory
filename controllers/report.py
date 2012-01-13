@@ -29,7 +29,10 @@ def itemsBy():
         
     out = {}
     for item in db(db.item.id > 0).select():
-        the_key = item[request.args(0)]
+        if item.has_key(request.args(0)):
+            the_key = item[request.args(0)]
+        else:
+            raise HTTP(404)
 
         # Allow an item to be filtered (useful for rss)
         if request.vars.filter and the_key != request.vars.filter:

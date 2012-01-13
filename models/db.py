@@ -81,7 +81,9 @@ db.define_table('item',
     Field('SerialNumber', label=T("Serial Number")),
     Field('HomeLocation', 'string', label=T("Location")),
     Field('Value', label=T("Value")),
-    Field('Condition', 'string', label=T("Condition"), default=T("New")),
+    #Field('Condition', 'string', label=T("Condition"), default=T("New")),
+    Field('CurrentCondition', 'string', label=T("Condition"), default=T("New")),
+    
     Field('Status', 'string', label=T("Status"), default=T("Avaliable")),
     Field('CreationDate', 'datetime', label=T("Creation Date"), default=request.now, writable=False),
     Field('ModificationDate', 'datetime', label=T("Last Modified"), default=request.now, update=request.now, writable=False),
@@ -106,8 +108,8 @@ db.item.Category.widget = SQLFORM.widgets.autocomplete(request,
                             db.item.Category, limitby=(0,40), min_length=0, orderby=db.item.Category)
 db.item.HomeLocation.widget = SQLFORM.widgets.autocomplete(request,
                             db.item.HomeLocation, limitby=(0,40), min_length=0, orderby=db.item.HomeLocation)
-db.item.Condition.widget = SQLFORM.widgets.autocomplete(request,
-                            db.item.Condition, limitby=(0,40), min_length=0, orderby=db.item.Condition)
+db.item.CurrentCondition.widget = SQLFORM.widgets.autocomplete(request,
+                            db.item.CurrentCondition, limitby=(0,40), min_length=0, orderby=db.item.CurrentCondition)
 db.item.Status.widget = SQLFORM.widgets.autocomplete(request,
                             db.item.Status, limitby=(0,40), min_length=0, orderby=db.item.Status)
                             

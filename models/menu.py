@@ -33,7 +33,7 @@ response.menu = [
         (T('Out by Person'), False, URL(request.application,'report','outByPerson'), []),
         (T('Items By...'), False, "#", [
             (T('Category'), False, URL(request.application,'report','itemsBy', args='Category'), []),
-            (T('Condition'), False, URL(request.application,'report','itemsBy', args='Condition'), []),
+            (T('Condition'), False, URL(request.application,'report','itemsBy', args='CurrentCondition'), []),
             (T('Location'), False, URL(request.application,'report','itemsBy', args='HomeLocation'), []),
             (T('Status'), False, URL(request.application,'report','itemsBy', args="Status"), []),
         ]),
