@@ -31,7 +31,7 @@ def plugin_jqgrid(table,fieldname=None,fieldvalue=None,col_widths={},
                              fieldvalue=fieldvalue,
                              ))
     script="""
-jQuery(document).ready(function(){jQuery("#%(id)s").jqGrid({ url:'%(callback)s', datatype: "json", colNames: %(colnames)s,colModel:%(colmodel)s, rowNum:50, rowList:[20,50,100], pager: '#%(id)s_pager', viewrecords: true,height:%(height)s, onSelectRow: function(id){%(onselect)s}});jQuery("#%(id)s").jqGrid('navGrid','#%(id)s_pager',{search:true,add:false,edit:false,del:false});jQuery("#%(id)s").setGridWidth(%(width)s,false);});
+jQuery(document).ready(function(){jQuery("#%(id)s").jqGrid({ url:'%(callback)s', datatype: "json", colNames: %(colnames)s,colModel:%(colmodel)s, rowNum:50, rowList:[20,50,100], pager: '#%(id)s_pager', viewrecords: true,height:%(height)s, onSelectRow: function(id){%(onselect)s}});jQuery("#%(id)s").jqGrid('navGrid','#%(id)s_pager',{search:true,add:false,edit:false,del:false});jQuery("#%(id)s").hideCol("id").setGridWidth(%(width)s,false);});
 """ % dict(callback=callback,colnames=json(colnames),
            colmodel=json(colmodel),id=_id,height=height,width=width, onselect=onselect)
     return TAG[''](TABLE(_id=_id),
